@@ -22,6 +22,7 @@ import os
 from sklearn.neural_network import MLPClassifier
 from sklearn.datasets import make_classification
 from sklearn.model_selection import train_test_split
+print("[Librerias importadas correctamente]")
 
 
 fixed_size = tuple((76, 76)) # las muestras son 76 por 76 pixeles
@@ -43,6 +44,8 @@ def fd_histogram(image, mask=None): # feature-descriptor-3: Color Histogram
     hist  = cv2.calcHist([image], [0, 1, 2], None, [bins, bins, bins], [0, 256, 0, 256, 0, 256])
     cv2.normalize(hist, hist)
     return hist.flatten()
+
+print("[Extraccion terminada]")
 
 labels = []
 features = []
@@ -73,7 +76,7 @@ rescaled_features = scaler.fit_transform(features) # normalizar caracteristicas
 (trainData, testData, trainLabels, testLabels) = train_test_split(np.array(rescaled_features),
                                                                   np.array(labels),
                                                                   test_size = 0.3) # 30 % para pruebas 
-
+print("[Dataset ubicado con exito]")
 #clf = RandomForestClassifier(n_estimators = 30) # un tipo de clasificador particular
 
 #CLASIFICADOR DE RED NEURONAL
@@ -83,11 +86,12 @@ clf = MLPClassifier(random_state=1, max_iter=600).fit(X_train, y_train)
 clf.predict_proba(X_test[:1])
 clf.predict(X_test[:5, :])
 clf.score(X_test, y_test)
-                  
+print("[Clasificacion terminada]")                  
 clf.fit(trainData, trainLabels) # modelo entrenado
 
 correct = 0
 predict = []
+
 for (data, label) in zip(testData, testLabels):
     assigned = clf.predict(data.reshape(1,-1))[0]
     print(label, assigned)
@@ -97,3 +101,4 @@ for (data, label) in zip(testData, testLabels):
 print('#', 100 * correct / len(testLabels), '% correct')
 print(confusion_matrix(testLabels, predict))
 print(classification_report(testLabels, predict))
+print("[DONE]")
