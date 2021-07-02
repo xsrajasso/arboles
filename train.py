@@ -5,6 +5,10 @@
 #librerias necesarias:
 #scikit-learn, opencv, mahotas
 
+#En caso de no tener las librerias instalar con pip3:
+# pip3 install scikit-learn, "   " opencv-python,
+# "   " mahotas
+
 from sklearn.preprocessing import LabelEncoder
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.model_selection import train_test_split
